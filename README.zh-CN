@@ -1,0 +1,235 @@
+RecipeVideoMaker
+
+RecipeVideoMaker 是一个专门为
+Mineral Balance Diet（矿物质平衡饮食）Android 应用设计的辅助工具。
+
+它可以将应用中生成的 食谱文字内容和手机界面截图，自动转换为 带语音讲解的短视频，适合发布到 YouTube Shorts、Instagram Reels、TikTok 等视频平台。
+
+该工具是 Mineral Balance Diet 内容工作流的一部分。
+它并不是一个通用的视频编辑软件。
+
+Mineral Balance Diet Android 应用（Google Play）：
+https://play.google.com/store/apps/details?id=com.mineralbalancediet.app
+
+这个工具解决了什么问题？
+
+Mineral Balance Diet Android 应用可以自动生成营养均衡的每日食谱。
+
+但在现实中，大多数社交平台并不适合直接发布文字或截图，而是更适合发布视频内容。
+
+RecipeVideoMaker 解决了这个“最后一步”的问题，将流程变为：
+
+Mineral Balance Diet 应用
+→ 手机上的食谱界面
+→ 带语音讲解的食谱视频
+
+整个过程不需要手动剪辑视频，
+不需要录屏，
+也不需要自己配音。
+
+这个工具适合谁？
+
+这个工具适合：
+
+营养师
+
+健康饮食内容创作者
+
+Mineral Balance Diet Android 应用的运营者
+
+不需要任何编程背景。
+本说明文档假设你从未使用过 Python 或命令行工具。
+
+开始前你需要准备什么？
+
+你需要：
+
+一台 Windows 电脑
+
+一部 Android 手机
+
+可以联网的环境
+
+步骤一 —— 安装 Python
+
+RecipeVideoMaker 运行在 Python 环境中。
+Python 只是一个“运行环境”，你不需要学习编程。
+
+在 Windows 上安装 Python 的步骤如下：
+
+使用浏览器访问 Python 官方网站 python.org。
+下载最新版本的 Python 3。
+运行安装程序。
+
+在安装界面的第一步，请务必勾选“Add Python to PATH”。
+然后继续安装，直到完成。
+
+安装完成后，Python 就可以使用了。
+
+步骤二 —— 安装 edge-tts
+
+edge-tts 用于将食谱文字转换为语音讲解。
+
+通过 Python 的安装工具安装 edge-tts。
+如果安装过程中没有出现错误，说明 edge-tts 已经可以使用。
+
+不需要进行额外配置。
+
+步骤三 —— 安装 ffmpeg
+
+ffmpeg 用于将图片和语音合成为视频。
+
+从 ffmpeg 官方网站下载安装包。
+选择 Windows 版本，并下载静态版本。
+
+解压下载的文件后，找到名为 ffmpeg.exe 和 ffprobe.exe 的两个文件。
+
+将这两个文件放到 RecipeVideoMaker 所在的文件夹中。
+
+完成后，ffmpeg 就可以使用了。
+
+步骤四 —— 从 Android 手机上获取食谱界面截图
+
+RecipeVideoMaker 使用直接从 Mineral Balance Diet Android 应用中获取的界面截图。
+
+所有截图必须使用以下命名格式：
+
+01.png，02.png，03.png，依次类推。
+
+使用两位数字编号，是为了在图片数量较多时，始终保持正确顺序。
+
+本项目已经包含用于截图的工具文件：
+
+shot_here.bat
+
+device.txt
+
+你不需要自己创建这些文件。
+
+开启 Android 截图权限
+
+在 Android 手机上：
+
+打开“设置”，进入“关于手机”。
+连续点击“版本号”，直到开启开发者模式。
+返回设置，进入“开发者选项”，开启 USB 调试。
+
+然后使用 USB 数据线将手机连接到电脑。
+
+配置 device.txt
+
+打开项目文件夹中的 device.txt 文件。
+
+将内容替换为你手机的设备 ID，只保留一行。
+这个设备 ID 会在手机成功连接电脑时显示。
+
+保存文件即可。
+
+截图 bat 文件是如何工作的？
+
+shot_here.bat 是一个辅助工具，用于 一次截取一张手机当前屏幕画面。
+
+每次使用它时：
+
+它会截取你手机当前显示的界面
+将截图保存到项目文件夹中
+并自动使用两位数字进行命名
+
+你需要 按照食谱界面的顺序，一步一步使用它。
+
+获取食谱界面截图
+//////
+在手机上打开 Mineral Balance Diet 应用，并进入第一个食谱界面。
+
+在 Windows 的命令行窗口（DOS 窗口）中使用截图工具的方法如下：
+
+截图工具是一个以 .bat 结尾的文件，通过在命令行中输入文件名来运行。
+
+在命令行窗口中，输入：
+
+shot.bat 1
+
+表示执行截图工具，并生成第一张图片。
+这次操作会截取手机当前屏幕，并保存为 01.png。
+
+然后，在手机上切换到下一个食谱页面，再次在命令行中输入：
+
+shot.bat 2
+
+这次操作会生成第二张图片 02.png。
+
+也就是说：
+
+数字 1 表示第一张图片
+
+数字 2 表示第二张图片
+
+每次只截取一张当前屏幕
+
+你需要按照食谱页面的顺序，一次一次地执行截图工具：
+
+第一页 → shot.bat 1 → 01.png
+第二页 → shot.bat 2 → 02.png
+第三页 → shot.bat 3 → 03.png
+
+一直重复，直到所有需要的页面都截图完成。
+//////
+
+所有图片都应位于 RecipeVideoMaker 所在的同一文件夹中。
+
+步骤五 —— 准备 script.txt
+
+script.txt 文件用于存放视频的语音讲解内容。
+
+每一行文字对应一张图片：
+
+第一行对应 01.png
+第二行对应 02.png
+第三行对应 03.png
+
+建议每一行使用一句清晰、简洁的说明文字。
+
+步骤六 —— 使用 Python 文件生成视频
+
+RecipeVideoMaker.py 是生成视频的核心程序。
+
+当你运行它时，它会：
+
+按数字顺序读取所有图片
+从 script.txt 中读取讲解文字
+自动生成语音讲解
+为每张图片生成对应的视频片段
+将所有内容合成为一个完整视频
+
+当你准备好 01.png, 02.png, ... 和 script.txt 后，运行 
+python RecipeVideoMaker.py 
+就会生成 output.mp4。
+
+最终生成的视频文件名为 output.mp4。
+
+支持的语言
+
+RecipeVideoMaker 支持 27 种语音语言，包括中文和英文。
+
+你可以在运行工具时选择需要的语言。
+
+输出文件说明
+
+成功完成后，文件夹中会包含：
+
+output.mp4，为最终生成的食谱视频
+
+tts_failed.txt，仅在某些语音生成失败时出现
+
+注意事项
+
+图片顺序完全由编号决定。
+必须使用两位数字编号以保证稳定性。
+
+如果因为网络原因导致语音生成失败，重新运行通常可以解决。
+
+所有食谱内容默认来源于 Mineral Balance Diet Android 应用。
+
+许可证
+
+MIT
